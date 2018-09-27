@@ -3,16 +3,17 @@
 
 ![](https://www.linux.com/sites/lcom/files/styles/rendered_file/public/branches-238379_1920_0.jpg?itok=2PlNpsVu)
 
-如果你不熟悉本系列（以及Linux），请查看我们的第一部分。在那篇文章中，我们通过Linux文件系统的树状结构，或者更确切地说以文件层次结构标准工作。我建议你仔细阅读，确保你理解自己能安全的做哪些操作。因为这一次，我将向你展示目录操作的魅力。
-### Making Directories
+如果你不熟悉本系列（以及Linux），[请查看我们的第一部分][1]:。在那篇文章中，我们通过Linux文件系统的树状结构，或者更确切地说以文件层次结构标准工作。我建议你仔细阅读，确保你理解自己能安全的做哪些操作。因为这一次，我将向你展示目录操作的魅力。
 
-Let's get creative before getting destructive, though. To begin, open a terminal window and use `mkdir` to create a new directory like this:
+### 新建目录
+
+在操作变得具有破坏性之前，让我们发挥创意创造。首先，打开一个终端窗口并使用命令mkdir创建一个新目录，如下所示：
 ```
 mkdir <directoryname>
 
 ```
 
-If you just put the directory name, the directory will appear hanging off the directory you are currently in. If you just opened a terminal, that will be your home directory. In a case like this, we say the directory will be created _relative_ to your current position:
+如果你只输入了目录名称，该目录将显示在您当前所在目录中。如果你刚刚打开一个终端，你当前位置为你的家目录。下面这个例子，我们展示了将要创建的目录与你当前所处位置的关系：
 ```
 $ pwd #This tells you where you are now -- see our first tutorial
 /home/<username>
@@ -20,36 +21,35 @@ $ mkdir newdirectory #Creates /home/<username>/newdirectory
 
 ```
 
-(Note that you do not have to type the text following the `#`. Text following the pound symbol `#` is considered a comment and is used to explain what is going on. It is ignored by the shell).
+(注 你不用输入＃后面的文本。#后面的文本为注释内容，用于解释发生了什么。它会被shell忽略，不会被执行).
 
-You can create a directory within an existing directory hanging off your current location by specifying it in the command line:
+你可以在当前位置中已经存在的某个目录下创建新的目录，方法是在命令行中指定它：
 ```
 mkdir Documents/Letters
 
 ```
 
-Will create the _Letters_ directory within the _Documents_ directory.
+这将在Documents目录中创建Letters目录。
 
-You can also create a directory above where you are by using `..` in the path. Say you move into the _Documents/Letters/_ directory you just created and you want to create a _Documents/Memos/_ directory. You can do:
+你还可以在路径中使用..在当前目录的上一级目录中创建目录。假设你进入刚刚创建的Documents/Letters/目录，并且想要创建Documents/Memos/目录。你可以这样做：
 ```
 cd Documents/Letters # Move into your recently created Letters/ directory
 mkdir ../Memos
 
 ```
 
-Again, all of the above is done relative to you current position. This is called using a _relative path_.
-
-You can also use an _absolute path_ to directories: This means telling `mkdir` where to put your directory in relation to the root (`/`) directory:
+同样，以上所有内容都是相对于你当前的位置做的。这就是使用了相对路径。
+你还可以使用目录的绝对路径：这意味着告诉mkdir命令将目录放在和根目录（/）有关的位置：
 ```
 mkdir /home/<username>/Documents/Letters
 
 ```
 
-Change `<username>` to your user name in the command above and it will be equivalent to executing `mkdir Documents/Letters` from your home directory, except that it will work from wherever you are located in the directory tree.
+在上面的命令中将<username>更改为你的用户名，这相当于从你的主目录执行mkdir Documents / Letters，通过使用绝对路径你可以在目录树中的任何位置完成这项工作。
 
-As a side note, regardless of whether you use a relative or an absolute path, if the command is successful, `mkdir` will create the directory silently, without any apparent feedback whatsoever. Only if there is some sort of trouble will `mkdir` print some feedback after you hit _[Enter]_.
+无论你使用相对路径还是绝对路径，只要命令成功执行，mkdir将静默的创建新目录，而没有任何明显的反馈。只有当遇到某种问题时，mkdir才会在你敲下[Enter]后打印一些反馈。
 
-As with most other command-line tools, `mkdir` comes with several interesting options. The `-p` option is particularly useful, as it lets you create directories within directories within directories, even if none exist. To create, for example, a directory for letters to your Mom within _Documents/_ , you could do:
+与大多数其他命令行工具一样，mkdir提供了几个有趣的选项。 -p选项特别有用，因为它允许你创建嵌套目录，即使目录不存在也可以。例如，要在Documents /中创建一个目录存放写给妈妈的信，你可以这样做：
 ```
 mkdir -p Documents/Letters/Family/Mom
 
@@ -57,97 +57,97 @@ mkdir -p Documents/Letters/Family/Mom
 
 And `mkdir` will create the whole branch of directories above _Mom/_ and also the directory _Mom/_ for you, regardless of whether any of the parent directories existed before you issued the command.
 
-You can also create several folders all at once by putting them one after another, separated by spaces:
+你也可以用空格来分隔目录名，来同时创建几个目录：
 ```
 mkdir Letters Memos Reports
 
 ```
 
-will create the directories _Letters/_ , _Memos/_ and _Reports_ under the current directory.
+这将在当前目录下创建目录Letters，Memos和Reports。
 
-### In space nobody can hear you scream
+### 目录名中可怕的空格
 
-... Which brings us to the tricky question of spaces in directory names. Can you use spaces in directory names? Yes, you can. Is it advised you use spaces? No, absolutely not. Spaces make everything more complicated and, potentially, dangerous.
+... 这带来了目录名称中关于空格的棘手问题。你能在目录名中使用空格吗？是的你可以。那么建议你使用空格吗？不，绝对不是。空格使一切变得更加复杂，并且可能是危险的操作。
 
-Say you want to create a directory called _letters mom/_. If you didn't know any better, you could type:
+假设您要创建一个名为letters mom的目录。如果你不知道如何更好处理，你可能会输入：
 ```
 mkdir letters mom
 
 ```
 
-But this is WRONG! WRONG! WRONG! As we saw above, this will create two directories, _letters/_ and _mom/_ , but not _letters mom/_.
+但这是错误的！错误的！错误的！正如我们在上面介绍的，这将创建两个目录letters和mom，而不是一个目录letters mom。
 
-Agreed that this is a minor annoyance: all you have to do is delete the two directories and start over. No big deal.
+得承认这是一个小麻烦：你所要做的就是删除这两个目录并重新开始，这没什么大不了。
 
-But, wait! Deleting directories is where things get dangerous. Imagine you did create _letters mom/_ using a graphical tool, like, say [Dolphin][2] or [Nautilus][3]. If you suddenly decide to delete _letters mom/_ from a terminal, and you have another directory just called _letters/_ under the same directory, and said directory is full of important documents, and you tried this:
+可是等等！删除目录可是个危险的操作。想象一下，你确实使用图形工具[Dolphin][2]或[Nautilus][3]创建了目录letters mom。如果你突然决定从终端删除目录letters mom，并且您在同一目录下有另一个名为letters的目录，并且该目录中包含重要的文档，结果你为了删除错误的目录尝试了以下操作：
 ```
 rmdir letters mom
 
 ```
 
-You would risk removing _letters/_. I say  "risk" because fortunately `rmdir`, the instruction used to remove directories, has a built in safeguard and will warn you if you try to delete a non-empty directory.
+你将会有风险删除目录letters。这里说“风险”，是因为幸运的是rmdir这条用于删除目录的指令，有一个内置的安全措施，如果你试图删除一个非空目录时，它会发出警告。
 
-However, this:
+但是，下面这个：
 ```
 rm -Rf letters mom
 
 ```
 
-(and this is a pretty standard way of getting rid of directories and their contents) will completely obliterate _letters/_ and will never even tell you what just happened.
+（注 这是删除目录及其内容的一种非常标准的方式）将完全删除letters目录，甚至永远不会告诉你刚刚发生了什么。
 
-The `rm` command is used to delete files and directories. When you use it with the options `-R` (delete _recursively_ ) and `-f` ( _force_ deletion), it will burrow down into a directory and its subdirectories, deleting all the files they contain, then deleting the subdirectories themselves, then it will delete all the files in the top directory and then the directory itself.
+rm命令用于删除文件和目录。当你将它与选项-R（递归删除）和-f（强制删除）一起使用时，它会深入到目录及其子目录中，删除它们包含的所有文件，然后删除子目录本身，然后它将删除所有顶层目录中的文件，再然后是删除目录本身。
 
-`rm -Rf` is an instruction you must handle with extreme care.
+`rm -Rf` 是你必须非常小心处理的命令。
 
-My advice is, instead of spaces, use underscores (`_`), but if you still insist on spaces, there are two ways of getting them to work. You can use single or double quotes (`'` or `"`) like so:
+我的建议是，你可以使用下划线来代替空格，但如果你仍然坚持使用空格，有两种方法可以使它们起作用。您可以使用单引号或双引号，如下所示：
 ```
 mkdir 'letters mom'
 mkdir "letters dad"
 
 ```
 
-Or, you can _escape_ the spaces. Some characters have a special meaning for the shell. Spaces, as you have seen, are used to separate options and arguments on the command line.  "Separating options and arguments" falls under the category of "special meaning". When you want the shell to ignore the special meaning of a character, you need to _escape_ it and to escape a character, you put a backslash (`\`) in front of it:
+或者，你可以转义空格。有些字符对shell有特殊意义。正如你所见，空格用于在命令行上分隔选项和参数。 “分离选项和参数”属于“特殊含义”范畴。当你想让shell忽略一个字符的特殊含义时，你需要转义，你可以在它前面放一个反斜杠（\）如：
 ```
 mkdir letters\ mom
 mkdir letter\ dad
 
 ```
 
-There are other special characters that would need escaping, like the apostrophe or single quote (`'`), double quotes (`"`), and the ampersand (`&`):
+还有其他特殊字符需要转义，如撇号或单引号（'），双引号（“）和＆符号（＆）：
 ```
 mkdir mom\ \&\ dad\'s\ letters
 
 ```
 
-I know what you're thinking: If the backslash has a special meaning (to wit, telling the shell it has to escape the next character), that makes it a special character, too. Then, how would you escape the escape character which is `\`?
+我知道你在想什么：如果反斜杠有一个特殊的含义（即告诉shell它必须转义下一个字符），这也使它成为一个特殊的字符。然后，你将如何转义转义字符(\)？
 
-Turns out, the exact way you escape any other special character:
+事实证明，你转义任何其他特殊字符都是同样的方式：
 ```
 mkdir special\\characters
 
 ```
 
-will produce a directory called _special\characters_.
+这将生成一个名为special\characters的目录。
 
-Confusing? Of course. That's why you should avoid using special characters, including spaces, in directory names.
+感觉困惑？当然。这就是为什么你应该避免在目录名中使用特殊字符，包括空格。
 
-For the record, here is a list of special characters you can refer to just in case.
+以防误操作你可以参考下面这个记录特殊字符的列表。
 
-### Things to Remember
+### 总结
 
-  * Use `mkdir <directory name>` to create a new directory.
-  * Use `rmdir <directory name>` to delete a directory (only works if it is empty).
-  * Use `rm -Rf <directory name>` to annihilate a directory -- use with extreme caution.
-  * Use a relative path to create directories relative to your current directory: `mkdir newdir.`.
-  * Use an absolute path to create directories relative to the root directory (`/`): `mkdir /home/<username>/newdir`
-  * Use `..` to create a directory in the directory above the current directory: `mkdir ../newdir`
-  * You can create several directories all in one go by separating them with spaces on the command line: `mkdir onedir twodir threedir`
-  * You can mix and mash relative and absolute paths when creating several directories simultaneously: `mkdir onedir twodir /home/<username>/threedir`
-  * Using spaces and special characters in directory names guarantees plenty of headaches and heartburn. Don't do it.
+  * 使用 `mkdir <directory name>` 创建新目录。
+  * 使用 `rmdir <directory name>` 删除目录（仅在目录为空时才有效）。
+  * 使用 `rm -Rf <directory name>` 来完全删除目录及其内容 - 请务必谨慎使用。
+  * 使用相对路径创建相对于当前目录的目录： `mkdir newdir.`.
+  * 使用绝对路径创建相对于根目录(`/`)的目录: `mkdir /home/<username>/newdir`
+  * 使用 `..` 在当前目录的上级目录中创建目录： `mkdir ../newdir`
+  * 你可以通过在命令行上使用空格分隔目录名来创建多个目录: `mkdir onedir twodir threedir`
+  * 同时创建多个目录时，你可以混合使用相对路径和绝对路径: `mkdir onedir twodir /home/<username>/threedir`
+  * 在目录名称中使用空格和特殊字符真的会让你很头疼，你最好不要那样做。
 
 
 
-For more information, you can look up the manuals of `mkdir`, `rmdir` and `rm`:
+有关更多信息，您可以查看`mkdir`, `rmdir` 和 `rm`的手册:
 ```
 man mkdir
 man rmdir
@@ -155,13 +155,13 @@ man rm
 
 ```
 
-To exit the man pages, press _[q]_.
+要退出手册页，请按键盘[q]键。
 
-### Next Time
+### 下次预告
 
-In the next installment, you'll learn about creating, modifying, and erasing files, as well as everything you need to know about permissions and privileges. See you then!
+在下一部分中，你将学习如何创建，修改和删除文件，以及你需要了解的有关权限和特权的所有信息!
 
-Learn more about Linux through the free ["Introduction to Linux" ][4]course from The Linux Foundation and edX.
+通过Linux Foundation和edX免费提供的["Introduction to Linux" ][4]课程了解有关Linux的更多信息。
 
 --------------------------------------------------------------------------------
 
