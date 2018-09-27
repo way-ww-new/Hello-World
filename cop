@@ -1,0 +1,47 @@
+A Word from The Beegoist – Richard Kenneth Eng – Medium
+======
+I like the [Go programming language][22]. I sought to use Go to write web applications. To this end, I examined two of the “full stack” web frameworks available to Go developers (aka “Gophers”): [Beego][23] and [Revel][24].
+
+The reason I looked for full stack was because of my prior experience with [web2py][25], a Python-based framework with extraordinary capability that was also [deliciously easy to get started and be highly productive in][26]. (I also cut my teeth on Smalltalk-based [Seaside][27], which has the same qualities.) In my opinion, full stack is the only way to go because developers should not waste time and effort on the minutiae of tool configuration and setup. The focus should be almost entirely on writing your application.
+
+Between Beego and Revel, I chose the former. It seemed to be more mature and better documented. It also had a built-in [ORM][28].
+
+To be sure, Beego isn’t as easy and productive as web2py, but I believe in Go, so it is worth the effort to give Beego my best shot. To get started with Beego, I needed a project, a useful exercise that covered all the bases, such as database management, CSS styling, email capability, form validation, etc., and also provided a useful end product.
+
+The project I selected was a user account management component for web applications. All of my previous applications required user registration/login, and Beego did not appear to have anything like that available.
+
+Now that I’ve completed the project, I believe it would be an excellent foundation for a Beego tutorial. I do not pretend that the code is optimal, nor do I pretend that it is bug-free, but if there are any bugs, it would be a good exercise for a novice to resolve them.
+
+The inspiration for this tutorial arose from my failure to find good, thorough tutorials when I first started learning Beego. There is one 2-part tutorial that is often mentioned, but I found Part 2 sorely lacking. Throwing source code at you for you to figure out on your own is no way to teach. Thus, I wanted to offer my take on a tutorial. Only history will determine whether it was successful.
+
+So, without further ado, let’s begin. The word is “Go!”
+
+### Basic Assumptions
+
+You have some familiarity with the Go language. I highly recommend you follow this [Go tutorial][1].
+
+You’ve installed [Go][2] and [Beego][3] on your computer. There are plenty of good online resources to help you here (for [example][4]). It’s really quite easy.
+
+You have basic knowledge of CSS, HTML, and databases. You have at least one database package installed on your computer such as [MySQL][5] (Community Edition) or [SQLite][6]. I have SQLite because it’s much easier to use.
+
+You have some experience writing software; basic skills are assumed. If you studied computer programming in school, then you’re off to a good start.
+
+You will be using your favourite programming editor in conjunction with the command line. I use [LiteIDE][7] (on the Mac), but I can suggest alternatives such as [TextMate][8] for the Mac, [Notepad++][9] for Windows, and [vim][10] for Linux.
+
+These basic assumptions define the target audience for the tutorial. If you’re a programming veteran, though, you’ll breeze through it and hopefully gain much useful knowledge, as well.
+
+### Creating the Project
+
+First, we must create a Beego project. We’ll call it ‘[ACME][11]’. From the command line, change directory (cd) to $GOPATH/src and enter:
+```
+$ bee new acme
+
+```
+
+The following directory structure will be created:
+```
+acme
+....conf
+....controllers
+....models
+....routers
